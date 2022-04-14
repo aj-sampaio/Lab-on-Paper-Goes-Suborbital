@@ -1,0 +1,43 @@
+import pigpio # Import Raspberry Pi GPIO library
+import time # Import time library
+import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
+import os as system
+pi1 = pigpio.pi()
+pi1.set_mode(17, pigpio.OUTPUT) #STEP
+pi1.set_mode(25, pigpio.OUTPUT) #Direction
+GPIO.setwarnings(False) # Ignore warning for now
+GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
+GPIO.setup(8, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 8 to be an input pin and set initial value to be pulled low (off)
+GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 12 to be an input pin and set initial value to be pulled low (off)
+ 
+def write(pin, state): # Set a pin to HIGH or LOW
+    pi1.write(pin, state)
+    
+def pwm(pin, dutycycle, frequency): # Sets a pin to produce a square wave with a fixed dutycycle and frequency
+    pi1.set_PWM_frequency(pin, frequency)
+    pi1.set_PWM_dutycycle(pin, dutycycle)
+
+while True: # Run forever
+    if GPIO.input(10) == GPIO.HIGH: # If Button 1 is pushed, Direction pin is set HIGH and STEP pin receives a PWM wave
+        write(25, 1)
+        time.sleep(0.01)
+        pwm(17, 128, 2000)
+        print("Button 1 was pushed!")
+    elif GPIO.input(8) == GPIO.HIGH: # If Button 1 is pushed, Direction pin is set LOW and STEP pin receives a PWM wave
+        write(25, 0)
+        time.sleep(0.01)
+        pwm(17, 128, 2000)
+        print("Button 2 was pushed!")
+    elif GPIO.input(12) == GPIO.HIGH: # If Button 3 is pushed, the actuation sequence is triggered
+        write(25, 0)
+        time.sleep(0.01)
+        pwm(17, 128, 500)
+        time.sleep(0.5)
+        write(25, 1)
+        time.sleep(0.01)
+        pwm(17, 128, 500)
+        time.sleep(0.5)
+    else:                             # If no button is pushed, STEP pin is set to LOW
+        time.sleep(0.01)
+        write(17, 0)

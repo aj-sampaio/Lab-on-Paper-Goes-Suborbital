@@ -16,7 +16,10 @@ pi1 = pigpio.pi()
 
 led = 'off'
 #def camera():
-    
+#Primitiva non-blocking to record video while still being able to actuate, turn on LEDs etc...
+
+#def download_logfile
+#def erase_logfile
     
 def write(pin, state): # Set a pin to HIGH or LOW
     try:
@@ -49,6 +52,7 @@ def leds():
 
 def read_temp_humid():
     https://github.com/karlrupp/i2cHoneywellHumidity
+#Search online for ways to call a C program in a python script
 def actuation():
         write(25, 0)
         time.sleep(0.01)

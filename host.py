@@ -5,7 +5,25 @@ PORT = 12345
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print ('Socket created')
 
+#flashmemory variable testmode/flightmode
+#Primitiva non-blocking (incluido time.sleep) que permite testar se alguma imformação chegou, sem ficar preso
+#
+#Post-flight: automaticly go to testmode or 
 #managing error exception
+#dhcp protocolo de atribuicao de IP - configurar o lease do IP para não o perdermos
+#macadress é um "nome" unico no mundo de cada maquina capaz de se ligar a internet
+#Check if IP adress won't change. Neste macadress o IP adress é xxxxx
+#Mais fácil é atribuiçao de IP estática.
+#Descobrir como os IPs vao ser atribuidos no ambiente de teste pre-flight - STEFAN
+#
+
+
+
+
+
+
+
+
 try:
 	s.bind((HOST, PORT))
 except socket.error:

@@ -1,4 +1,6 @@
 import socket
+import operations
+import time
 
 HOST = '' # Server IP
 PORT = 12345 
@@ -17,7 +19,7 @@ print ('Socket created')
 #Descobrir como os IPs vao ser atribuidos no ambiente de teste pre-flight - STEFAN
 #
 
-
+led_flag = 'off'
 
 
 
@@ -45,7 +47,33 @@ while True:
 		reply = 'Hi, back!'
 	elif data == 'This is important':
 		reply = 'OK, I have done the important thing you have asked me!'
-
+        
+	# LED command -> led
+    elif data == 'led':
+        global led_flag
+        if led_flag == 'off':
+            operations.leds()
+            time.sleep(0.1)
+            led_flag = 'on'
+            print('LEDs turned', led_flag)
+        else:
+            operations.leds()
+            time.sleep(0.1)
+            led_flag = 'off'
+            print('LEDs turned')
+            = 'LED function activated'
+    
+    # Stepper motor command -> motor<direction><duration>      Eg. motorfront500/motorback100 (direction=front/back; duration in miliseconds)
+    # Right now duration is set to 500 miliseconds, duration control to be implemented later
+    elif data == 'motorfront':
+        operations.motorfront()
+        time.sleep(0.1)
+        print('Motor moved frontwards')
+        
+    elif data == 'motorback':
+        operations.motorback()
+        time.sleep(0.1)
+        print('Motor moved frontwards')
 	#and so on and on until...
 	elif data == 'quit':
 		conn.send('Terminating')

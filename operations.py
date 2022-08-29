@@ -1,16 +1,14 @@
 import pigpio # Import Raspberry Pi GPIO library
 import time # Import time library
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
+import logging
 
 pi1 = pigpio.pi()
-pi1.set_mode(17, pigpio.OUTPUT) #STEP
-pi1.set_mode(25, pigpio.OUTPUT) #Direction
+pi1.set_mode(17, pigpio.OUTPUT) #STEP = GPIO17
+pi1.set_mode(25, pigpio.OUTPUT) #Direction = GPIO25
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
-GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
-GPIO.setup(8, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 8 to be an input pin and set initial value to be pulled low (off)
-GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 12 to be an input pin and set initial value to be pulled low (off)
-GPIO.setup(14, GPIO.OUT, pull_up_down=GPIO.PUD_DOWN) # Set pin 14 to be an output pin to control the LEDs
+GPIO.setup(XX, GPIO.OUT, pull_up_down=GPIO.PUD_DOWN) # Set pin XX to be an output pin to control the LEDs
 
 led = 'off'
 #def camera():
@@ -45,8 +43,24 @@ def leds():
     except:
         logging.exception('Error turning LEDs ON/OFF')
 
-def read_temp_humid():
-    https://github.com/karlrupp/i2cHoneywellHumidity
+#def read_temp_humid():
+ #   https://github.com/karlrupp/i2cHoneywellHumidity
+ 
+ 
+def motorfront():
+    write(25, 0)
+    time.sleep(0.1)
+    pwm(17, 128, 500)
+    time.sleep(0.5)
+    write(17, 0)
+    
+def motorback():
+    write(25, 1)
+    time.sleep(0.1)
+    pwm(17, 128, 500)
+    time.sleep(0.5)
+    write(17, 0)
+    
 def actuation():
         write(25, 0)
         time.sleep(0.01)
